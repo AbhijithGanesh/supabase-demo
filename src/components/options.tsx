@@ -16,8 +16,8 @@ export default function Options(props: OptionsProp) {
     setSelected(state);
     let functionObject: ResponseType = {
       question_id: props?.question_id,
-      answer_id: state
-    }
+      answer_id: state,
+    };
     props.onChange(functionObject);
   };
 
