@@ -5,37 +5,49 @@ import {
 import { scrollDown, scrollTop } from "@my-supabase-app/components/scrolls";
 import { useSession } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/router";
-import { FormEvent, FormEventHandler, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
 
+export type ResponseType = {
+  question_id: number;
+  answer_id: number | string;
+};
+
+export type ResponseStateTypes = {
+  [key: number]: string;
+};
+
 export default function MyQuizPage() {
-  const [responses, setResponses] = useState<any>();
   const currentSession = useSession();
   const router = useRouter();
-  // @ts-expect-error
-  const handleQuestionChange = (question, response) => {
-    console.log({
-      question: response,
-    });
-  };
+  const [responses, setResponses] = useState<ResponseStateTypes>({});
 
-  const handleSubmit = (event: any) => {
-    event.preventDefault();
-    console.log(responses);
+  const HandleChange = (props: ResponseType) => {
+    let temp_responses: any = responses;
+    temp_responses[props?.question_id] = props?.answer_id;
+    setResponses(temp_responses);
   };
 
   if (currentSession) {
     return (
       <>
-        <form onSubmit={handleSubmit}>
+        <form>
           {QuestionOptions.map((question, index) => (
             <Question
               key={index}
-              question={question.question}
+              question={question}
               options={question.options}
-              onChange={handleQuestionChange}
+              onChange={HandleChange}
             />
           ))}
+          <section className="flex flex-auto items-start justify-center w-full py-16">
+            <button
+              type="button"
+              className="text-white bg-indigo-800 hover:bg-indigo-950 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800"
+            >
+              Submit your answers
+            </button>
+          </section>
           <section className="hidden lg:flex fixed bottom-4 right-4 flex-col gap-4 text-white mx-8">
             <section className="flex text-3xl mx-2 gap-2">
               <button onClick={scrollTop} className="scroll-button">
@@ -46,18 +58,13 @@ export default function MyQuizPage() {
               </button>
             </section>
           </section>
-          <section className="p-4 m-8 bg-indigo-800 flex flex-col items-center text-center w-fit justify-center gap-4 text-white mx-8">
-            <button onClick={scrollDown} className="scroll-button">
-              Submit
-            </button>
-          </section>
         </form>
       </>
     );
   } else {
     useEffect(() => {
       router.push("/login");
-    });
+    }, []);
   }
 }
 

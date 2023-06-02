@@ -3,13 +3,18 @@ import Options from "./options";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export type QuestionProps = {
+export type QuestionFormat = {
+  id: number;
   question: string;
-  options: string[];
-  onChange: (question: string, response: string) => void;
 };
 
-export const Question = ({ question, options, onChange }: QuestionProps) => {
+export type QuestionProps = {
+  question: QuestionFormat;
+  options: string[];
+  onChange: Function;
+};
+
+export const Question = (props: QuestionProps) => {
   return (
     <>
       <section
@@ -18,10 +23,16 @@ export const Question = ({ question, options, onChange }: QuestionProps) => {
         <section className="flex flex-auto flex-col text-white font-semibold text-xl mx-8 lg:w-1/2 sm:col-start-1">
           {"1 out of n"}
           <hr className="text-white bg-white my-2" />
-          <section className="flex-col text-lg font-normal">{question}</section>
+          <section className="flex-col text-lg font-normal">
+            {props.question.question}
+          </section>
         </section>
         <section className="w-full sm:col-start-1">
-          <Options options={options} />
+          <Options
+            question_id={props.question.id}
+            options={props.options}
+            onChange={props.onChange}
+          />
         </section>
       </section>
     </>

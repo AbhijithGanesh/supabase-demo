@@ -1,10 +1,10 @@
+import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
-import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
-import { useEffect } from "react";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 
-const Home = () => {
+const AuthPage = () => {
   const session = useSession();
   const supabase = useSupabaseClient();
   const router = useRouter();
@@ -17,7 +17,7 @@ const Home = () => {
       >
         <section className="text-2xl font-semibold font-Inter">Login</section>
         <Auth
-          redirectTo="/quiz"
+          redirectTo="http://localhost:3000/quiz"
           supabaseClient={supabase}
           providers={["github"]}
           appearance={{
@@ -39,9 +39,11 @@ const Home = () => {
     );
   } else {
     useEffect(() => {
-      router.push("/quiz");
+      if (session) {
+        router.push("/quiz");
+      }
     }, [session]);
   }
 };
 
-export default Home;
+export default AuthPage;
