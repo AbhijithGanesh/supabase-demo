@@ -17,7 +17,7 @@ const AuthPage = () => {
       >
         <section className="text-2xl font-semibold font-Inter">Login</section>
         <Auth
-          redirectTo="http://localhost:3000/quiz"
+          redirectTo="https://quiz.abhijithganesh.com/quiz"
           supabaseClient={supabase}
           providers={["github"]}
           appearance={{
