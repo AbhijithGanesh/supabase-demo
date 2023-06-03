@@ -9,10 +9,15 @@
     "postAttachCommand": {
       "server": "npm run dev"
     },
+    "settings":{
+     "terminal.integrated.env.linux": {
+      "NEXT_PUBLIC_SUPABASE_ANON_KEY": "${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}",
+      "NEXT_PUBLIC_SUPABASE_URL":"${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}"
+    },
     "customizations": {
       "codespaces": {
         "openFiles": [
-          "src/pages/_app.tsx"
+          "src/pages/src/pages/quiz.tsx"
         ]
       }
     },
