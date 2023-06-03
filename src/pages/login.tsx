@@ -3,6 +3,8 @@ import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import Head from 'next/head';
+import SEO from "../components/seo";
 
 const AuthPage = () => {
   const session = useSession();
@@ -10,6 +12,7 @@ const AuthPage = () => {
   const router = useRouter();
 
   if (!session) {
+    <SEO title = "Login" description = "Login using your username-password or with GitHub and proceed to the quiz app."/>
     return (
       <section
         className="flex flex-1 flex-col items-center justify-center h-screen flex-wrap text-xl"
