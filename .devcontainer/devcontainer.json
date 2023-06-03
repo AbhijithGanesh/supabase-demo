@@ -7,7 +7,7 @@
     "updateContentCommand": "npm install",
     "postCreateCommand": "",
     "postAttachCommand": {
-      "server": "npm start"
+      "server": "npm dev"
     },
     "customizations": {
       "codespaces": {
