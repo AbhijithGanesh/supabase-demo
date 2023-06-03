@@ -15,5 +15,5 @@ place to start, **This is your place to go** . We'll be exploring the following 
 ## Get started
 
  <a href="https://github.com/codespaces/new?skip_quickstart=true&machine=standardLinux32gb&repo=647223225&ref=typescript-brainstorming&devcontainer_path=.devcontainer%2Fdevcontainer.json&geo=SoutheastAsia">
-  <img src="https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Github%20Codespaces-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white"/>
 </a>
