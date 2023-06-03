@@ -3,6 +3,7 @@ import { useState } from "react";
 import { createPagesBrowserClient } from "@supabase/auth-helpers-nextjs";
 import { SessionContextProvider, Session } from "@supabase/auth-helpers-react";
 import { AppProps } from "next/app";
+import SEO from "../components/seo";
 
 function MyApp({
   Component,
@@ -14,6 +15,7 @@ function MyApp({
 
   return (
     <>
+    <SEO/>
     <SessionContextProvider
       supabaseClient={supabase}
       initialSession={pageProps.initialSession}
