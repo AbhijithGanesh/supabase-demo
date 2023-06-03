@@ -3,6 +3,14 @@
     "hostRequirements": {
       "cpus": 4
     },
+    "secrets": {
+      "NEXT_PUBLIC_SUPABASE_ANON_KEY": {
+        "description": "This is the description of the secret.",
+      },
+    "NEXT_PUBLIC_SUPABASE_URL": { 
+        "description":"Supabase URL"
+    }
+    },
     "waitFor": "onCreateCommand",
     "updateContentCommand": "npm install",
     "postCreateCommand": "",
