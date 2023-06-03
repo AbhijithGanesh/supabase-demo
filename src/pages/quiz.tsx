@@ -4,6 +4,7 @@ import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
+import SEO from "../components/seo";
 
 export type ResponseType = {
   question_id: number;
@@ -84,6 +85,7 @@ export default function MyQuizPage() {
   if (currentSession) {
     return (
       <>
+      <SEO title = "Quiz" description = "Attempt the quiz" />
         <form>
           {Questions.map((question: QuestionFetch) => {
             return (

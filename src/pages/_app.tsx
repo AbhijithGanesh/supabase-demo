@@ -13,12 +13,14 @@ function MyApp({
   const [supabase] = useState(() => createPagesBrowserClient());
 
   return (
+    <>
     <SessionContextProvider
       supabaseClient={supabase}
       initialSession={pageProps.initialSession}
     >
       <Component {...pageProps} />
     </SessionContextProvider>
+    </>
   );
 }
 export default MyApp;
