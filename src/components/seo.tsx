@@ -1,10 +1,10 @@
 import Head from "next/head";
 
-const DEFAULT_OG_IMAGE = "https://user-images.githubusercontent.com/67182544/181340750-672419cb-2fcc-434f-870e-d3e2871764ac.png";
+const DEFAULT_OG_IMAGE = "https://user-images.githubusercontent.com/67182544/181340750-672419cb-2fcc-434f-870e-d3e2871764ac.png?height=100width=100";
 
 export default function Seo({
-  title = "Example supabase app ",
-  description = "This is an example supabase app that was made for FOSS United X GDSC VITC meet-up.",
+  title = "Supabase Quiz App 🚀 ",
+  description = "This is an example quiz supabase app that was made for FOSS United X GDSC VITC meet-up.",
   siteName = "Quiz App",
   ogImage = DEFAULT_OG_IMAGE,
   ogType = "website",
@@ -12,7 +12,7 @@ export default function Seo({
 }) {
   return (
     <Head>
-      <title key="title">{`${title} – ${siteName}`}</title>
+      <title key="title">{`${title} - ${siteName}`}</title>
       <meta name="description" content={description} />
       <meta key="og_type" property="og:type" content={ogType} />
       <meta key="og_title" property="og:title" content={title} />

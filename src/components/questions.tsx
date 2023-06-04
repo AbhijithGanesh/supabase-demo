@@ -16,9 +16,9 @@ export const Question = (props: QuestionProps) => {
       <section
         className={`font-${inter.style.fontFamily} py-4 sm:flex-col lg:h-screen lg:flex items-center justify-center lg:px-48`}
       >
-        <section className="flex flex-auto flex-col text-white font-semibold text-xl mx-8 lg:w-1/2 sm:col-start-1">
+        <section className="flex flex-auto flex-col text-black dark:text-white font-semibold text-xl mx-8 lg:w-1/2 sm:col-start-1">
           {`${props.id} out of 17`}
-          <hr className="text-white bg-white my-2" />
+          <hr className="bg-gray-800 dark:bg-white my-2" />
           <section className="flex-col text-lg font-normal">
             {props.question}
           </section>

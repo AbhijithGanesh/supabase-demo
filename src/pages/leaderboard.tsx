@@ -16,7 +16,7 @@ const Leaderboard = (): JSX.Element => {
       let { data, error } = await client
         .from("submitted_answers")
         .select("submitted_by, points")
-        .order("points", { ascending: false });
+        .order("points", { ascending: true });
 
       let users = await client.from("get_leaderboard").select("*")!;
 
@@ -52,11 +52,15 @@ const Leaderboard = (): JSX.Element => {
     users.push(_body);
   });
 
+  users.sort((a, b) => {
+    return b.points - a.points;
+  });
+
   return (
     <>
       <section className="h-screen flex flex-col items-center justify-center px-16">
         <table className="w-full rounded-md text-sm text-left text-gray-500 dark:text-gray-400">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 rounded-md dark:bg-gray-700 dark:text-gray-400">
+          <thead className="text-xs text-gray-700 uppercase bg-gray-50 rounded-md dark:bg-gray-700 dark:text-gray-50">
             <tr>
               <th scope="col" className="px-6 py-3">
                 Email

@@ -22,7 +22,7 @@ export default function Options(props: OptionsProp) {
   };
 
   return (
-    <section className="w-full px-4 py-16">
+    <section className="w-full px-4 py-16 ">
       <section className="mx-auto w-full">
         <RadioGroup value={selected} onChange={handleState}>
           <section className="space-y-2">
@@ -33,12 +33,12 @@ export default function Options(props: OptionsProp) {
                 className={({ active, checked }) =>
                   `${
                     active
-                      ? "ring-2 ring-white ring-opacity-60 ring-offset-2 ring-offset-indigo-300 hover:bg-indigo-700"
-                      : ""
+                      ? "ring-2 ring-white ring-opacity-60 ring-offset-2 ring-offset-indigo-300"
+                      : "hover:text-white"
                   }
                   ${
                     checked
-                      ? "bg-indigo-900 bg-opacity-75 text-white hover:bg-indigo-600"
+                      ? "hover:text-black bg-indigo-900 bg-opacity-75 text-white"
                       : "bg-white"
                   }
                     relative flex cursor-pointer rounded-lg px-5 py-4 shadow-md focus:outline-none`
@@ -47,7 +47,7 @@ export default function Options(props: OptionsProp) {
                 {({ active, checked }) => (
                   <>
                     <section className="flex w-full items-center justify-between">
-                      <section className="flex items-center">
+                      <section className="flex items-center"> 
                         <section className="text-sm">
                           <RadioGroup.Label
                             as="p"
@@ -57,12 +57,6 @@ export default function Options(props: OptionsProp) {
                           >
                             {question}
                           </RadioGroup.Label>
-                          <RadioGroup.Description
-                            as="span"
-                            className={`inline ${
-                              checked ? "text-sky-100" : "text-gray-500"
-                            }`}
-                          ></RadioGroup.Description>
                         </section>
                       </section>
                       {checked && (
