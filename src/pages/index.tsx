@@ -11,12 +11,17 @@ export default function Home() {
         <p className="text-lg mb-6">
           Learn and grow with our interactive quizzes.
         </p>
-        <button className="bg-indigo-500 hover:bg-indigo-800 text-white py-2 px-4 rounded mb-4">
-          <a href="/quiz"> Take the quiz </a>
-        </button>
+        <a href="/quiz">
+          <button className="bg-indigo-500 hover:bg-indigo-800 text-white py-2 px-4 rounded mb-4">
+            Take the quiz
+          </button>
+        </a>
         <p className="dark:text-white text-gray-600 text-sm">
           Already have an account?{" "}
-          <a href="/login" className="text-indigo-600 dark:text-blue-400 hover:underline">
+          <a
+            href="/login"
+            className="text-indigo-600 dark:text-blue-400 hover:underline"
+          >
             Log In
           </a>
         </p>
