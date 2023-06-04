@@ -64,9 +64,16 @@ const AuthPage = () => {
   }, [supabaseClient, currentSession]);
 
   if (loading) {
-    return <div>Loading...</div>; 
-  }
-  else{
+    return (
+      <section className="h-screen flex justify-center items-center">
+        <section
+          className="h-16 items-center justify-center w-16 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+          role="status"
+        />
+        <section className="text-2xl font-bold mx-2">Loading...</section>
+      </section>
+    );
+  } else {
     return <LoginPage supabase={supabaseClient} />;
   }
 };
