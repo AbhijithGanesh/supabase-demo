@@ -29,6 +29,8 @@ export default function MyQuizPage() {
   const supabaseClient = useSupabaseClient();
   const currentSession = useSession();
   const router = useRouter();
+
+  const [loading, setLoading] = useState<boolean>(true);
   const [Questions, setQuestions] = useState<QuestionFetch[]>([]);
   const [searchOptions, setSearchOptions] = useState<any>([]);
   const [responses, setResponses] = useState<ResponseStateTypes>({});
@@ -88,99 +90,116 @@ export default function MyQuizPage() {
       }
       setResponses(dummy_responses);
       setQuestions(cleaned_questions);
+      setLoading(false);
     }
     fetchLoginStats(currentSession);
     fetchData();
   }, [supabaseClient, currentSession]);
 
-  return (
-    <>
-      <SEO title="Quiz" description="Attempt the quiz" />
-      <form>
-        {Questions.map((question: QuestionFetch) => {
-          return (
-            <Question
-              key={question.id}
-              question={question.question}
-              id={question.id}
-              options={question.options}
-              onChange={HandleChange}
-            />
-          );
-        })}
-        <section className="flex flex-auto items-start justify-center w-full py-16">
-          <button
-            type="button"
-            onClick={async (e) => {
-              e.preventDefault();
-              let cleaned_arr = [];
-
-              for (let i = 0; i < Questions.length; i++) {
-                let body = {
-                  submitted_question: Questions[i].id,
-                  submitted_by: currentSession!.user?.id,
-                  submitted_answer: "",
-                  is_correct: false,
-                  points: 0,
-                };
-                if (responses[i] == "") {
-                  alert(
-                    `Please answer all questions Question ${i + 1} is missing`
-                  );
-                  return;
-                } else {
-                  let filtered_option = searchOptions.filter((option: any) => {
-                    return option.question == i;
-                  });
-                  let option_cleaning = filtered_option.filter(
-                    (option: any) => {
-                      return option.option === responses[i];
-                    }
-                  );
-                  body.submitted_answer = option_cleaning[0]?.id;
-                  body.is_correct = option_cleaning[0]?.is_correct;
-                  body.points = option_cleaning[0]?.points;
-                }
-                cleaned_arr.push(body);
-              }
-              let { data, error } = await supabaseClient
-                .from("submitted_answers")
-                .insert(cleaned_arr);
-              if (error) {
-                alert("Something went wrong");
-              } else {
-                alert("Your answers have been submitted");
-                router.push("/leaderboard");
-              }
-            }}
-            className="text-white bg-indigo-800 hover:bg-indigo-950 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800"
-          >
-            Submit your answers
-          </button>
+  if (loading) {
+    return (
+      <>
+        <section className="h-screen flex justify-center items-center">
+          <section
+            className="h-16 items-center justify-center w-16 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+            role="status"
+          />
+          <section className="text-2xl font-bold mx-2">Loading...</section>
         </section>
-        <section className="hidden lg:flex fixed bottom-4 right-4 flex-col gap-4 text-white mx-8">
-          <section className="flex text-3xl mx-2 gap-2">
+      </>
+    );
+  } else {
+    return (
+      <>
+        <SEO title="Quiz" description="Attempt the quiz" />
+        <form>
+          {Questions.map((question: QuestionFetch) => {
+            return (
+              <Question
+                key={question.id}
+                question={question.question}
+                id={question.id}
+                options={question.options}
+                onChange={HandleChange}
+              />
+            );
+          })}
+          <section className="flex flex-auto items-start justify-center w-full py-16">
             <button
-              onClick={(e) => {
+              type="button"
+              onClick={async (e) => {
                 e.preventDefault();
-                scrollTop();
+                let cleaned_arr = [];
+
+                for (let i = 0; i < Questions.length; i++) {
+                  let body = {
+                    submitted_question: Questions[i].id,
+                    submitted_by: currentSession!.user?.id,
+                    submitted_answer: "",
+                    is_correct: false,
+                    points: 0,
+                  };
+                  if (responses[i] == "") {
+                    alert(
+                      `Please answer all questions Question ${i + 1} is missing`
+                    );
+                    return;
+                  } else {
+                    let filtered_option = searchOptions.filter(
+                      (option: any) => {
+                        return option.question == i;
+                      }
+                    );
+                    let option_cleaning = filtered_option.filter(
+                      (option: any) => {
+                        return option.option === responses[i];
+                      }
+                    );
+                    body.submitted_answer = option_cleaning[0]?.id;
+                    body.is_correct = option_cleaning[0]?.is_correct;
+                    body.points = option_cleaning[0]?.points;
+                  }
+                  cleaned_arr.push(body);
+                }
+                let { data, error } = await supabaseClient
+                  .from("submitted_answers")
+                  .insert(cleaned_arr);
+                if (error) {
+                  alert("Something went wrong");
+                } else {
+                  alert("Your answers have been submitted");
+                  router.push("/leaderboard");
+                }
               }}
-              className="scroll-button"
+              className="text-white bg-indigo-800 hover:bg-indigo-950 focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none dark:focus:ring-indigo-800"
             >
-              <BsFillCaretUpFill className="hover:text-indigo-600 hover:-translate-y-2" />
-            </button>
-            <button
-              onClick={(e) => {
-                scrollDown();
-                e.preventDefault();
-              }}
-              className="scroll-button"
-            >
-              <BsFillCaretDownFill className="hover:text-indigo-600 hover:translate-y-2" />
+              Submit your answers
             </button>
           </section>
-        </section>
-      </form>
-    </>
-  );
+          <section className="hidden lg:flex fixed bottom-4 right-4 flex-col gap-4 text-white mx-8">
+            <section className="flex text-3xl mx-2 gap-2">
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollTop();
+                }}
+                className="scroll-button"
+              >
+                <BsFillCaretUpFill className="hover:text-indigo-600 hover:-translate-y-2" />
+              </button>
+              <button
+                onClick={(e) => {
+                  scrollDown();
+                  e.preventDefault();
+                }}
+                className="scroll-button"
+              >
+                <BsFillCaretDownFill className="hover:text-indigo-600 hover:translate-y-2" />
+              </button>
+            </section>
+          </section>
+        </form>
+      </>
+    );
+  }
 }

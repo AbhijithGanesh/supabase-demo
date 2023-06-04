@@ -1,5 +1,12 @@
-import { Session, SupabaseClient, useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
+import {
+  Session,
+  SupabaseClient,
+  useUser,
+  useSession,
+  useSupabaseClient,
+} from "@supabase/auth-helpers-react";
 import { Auth } from "@supabase/auth-ui-react";
+import { useState } from "react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -40,19 +47,28 @@ export const LoginPage = (props: LoginPageProps): JSX.Element => {
 
 const AuthPage = () => {
   const currentSession = useSession();
+  const user = useUser();
+  const [loading, setLoading] = useState<boolean>(true);
   const supabaseClient = useSupabaseClient();
   const router = useRouter();
 
   useEffect(() => {
-    async function fetchLoginStats(data: Session | null) {
-      if (data) {
+    async function fetchLoginStats(data: Session) {
+      if (data != null) {
         router.push("/quiz");
+      } else {
+        setLoading(false);
       }
     }
-    fetchLoginStats(currentSession);
+    fetchLoginStats(currentSession!);
   }, [supabaseClient, currentSession]);
 
-  return <LoginPage supabase={supabaseClient} />;
+  if (loading) {
+    return <div>Loading...</div>; 
+  }
+  else{
+    return <LoginPage supabase={supabaseClient} />;
+  }
 };
 
 export default AuthPage;
